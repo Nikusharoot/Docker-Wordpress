@@ -1,0 +1,40 @@
+version: '3'
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: app_gts
+    restart: always
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: techsolutiondb
+      MYSQL_USER: nick    
+      MYSQL_PASSWORD: 123321
+    ports:
+      - 8080:80
+      - 443:443
+  db:
+    image: mysql:latest
+    container_name: gts_mysql
+    restart: always
+    command: "--default-authentication-plugin=mysql_native_password"
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: testdb
+      MYSQL_USER: nick
+      MYSQL_PASSWORD: 123321
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - 3333:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORT: 123321
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.16.57.0/24
