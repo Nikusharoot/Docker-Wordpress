@@ -34,7 +34,7 @@ services:
       MYSQL_ROOT_PASSWORT: 123321
 networks:
   default:
-    driver: bridge
+    driver: db
     ipam:
       config:
         - subnet: 172.16.57.0/24
